@@ -1,0 +1,137 @@
+
+.login_header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+.login_header ul li{
+    padding: 0px 16px;
+    text-transform: capitalize;
+}
+
+#doctor_dashboard{
+    background-color: rgb(210, 233, 227);
+    padding: 60px 20px;
+}
+#doctor_dashboard aside{
+    background-color: #008081;
+    height: 550px;
+    /* padding: 20px 20px; */
+}
+#doctor_dashboard aside ul{
+    margin: 0;
+    padding: 0;
+}
+#doctor_dashboard aside ul li{
+    padding: 14px 28px;
+    cursor: pointer;
+    transition: all .3s linear;
+}
+/* #doctor_dashboard aside ul li:hover{
+    background-color: rgb(60, 209, 2);
+} */
+#doctor_dashboard aside ul li a{
+    text-transform: capitalize;
+    text-decoration: none;
+    color: white;
+}
+#doctor_dashboard .dashboard_content{
+    background-color: white;
+    padding: 16px 20px;
+}
+#doctor_dashboard .dashboard_content .sub_heading{
+    border-bottom: 1px solid #0081819c;
+}
+#doctor_dashboard .dashboard_content .progress_work{
+    background-color: #eee;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 6px;
+}
+#doctor_dashboard .dashboard_content .progress_work span{
+    font-size: 40px;
+    color: #006868;
+}
+#doctor_dashboard .dashboard_content .progress_work p{
+    margin-bottom: 0px;
+    color: rgba(128, 128, 128, 0.774);
+}
+#doctor_dashboard .dashboard_content .progress_work #nothing{
+    font-size: 22px !important;
+}
+#doctor_dashboard .dashboard_content .contact_info{
+    padding: 24px 0px;
+}
+#doctor_dashboard .dashboard_content .contact_info form label{
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #006868;
+}
+#doctor_dashboard .dashboard_content .contact_info form input:focus{
+    box-shadow: none;
+}
+#doctor_dashboard .dashboard_content #manage .slots_work{
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+#doctor_dashboard .dashboard_content #manage button{
+    font-size: 14px;
+    text-transform: capitalize;
+}
+#doctor_dashboard .dashboard_content #manage input{
+    text-transform: capitalize;
+}
+#doctor_dashboard .dashboard_content #manage select{
+    text-transform: capitalize;
+}
+#doctor_dashboard .dashboard_content #manage select:focus{
+    box-shadow: none;
+}
+#doctor_dashboard .dashboard_content #manage input:focus{
+    box-shadow: none;
+}
+#doctor_dashboard .dashboard_content #manage i{
+    cursor: pointer;
+}
+#doctor_dashboard .dashboard_content #manage .display_appointments{
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+#doctor_dashboard .dashboard_content #manage .display_appointments table thead th{
+    text-transform: capitalize;
+}
+#doctor_dashboard .dashboard_content #manage .display_appointments table tbody td{
+    text-transform: capitalize;
+}
+.modal form input{
+    text-transform: capitalize;
+}
+.modal form select{
+    text-transform: capitalize;
+}
+.modal form label{
+    text-transform: capitalize;
+    font-weight: bold;
+}
+.modal form input:focus{
+    box-shadow: none !important;
+}
+.modal form select:focus{
+    box-shadow: none !important;
+}
+.modal form textarea:focus{
+    box-shadow: none !important;
+}
+#doctor_dashboard .dashboard_content button{
+    padding: 8px 20px;
+}
+.cancel-btn{
+    margin-right: 1rem;
+}

@@ -1,0 +1,41 @@
+
+
+#doctorbanner{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.329), rgba(0, 0, 0, 0.329)),  url('/public/team.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 600px;
+    object-fit: cover;
+    background-position: center;
+    margin-bottom: 30px;
+}
+
+#doctorbanner h1{
+    margin-top: 190px;
+    font-size: 70px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.863);
+    /* text-transform: uppercase; */
+    letter-spacing: 2px;
+}
+
+#doctos_category .card h5{
+    text-transform: capitalize;
+    color: gray;
+}
+#doctos_category .card h5 span{
+    font-weight: bold;
+    color: #006363;
+    letter-spacing: 1px;
+}
+#doctos_category .card p{
+    text-transform: capitalize;
+    margin-bottom: 0px;
+    color: gray;
+}
+#doctos_category .card p span{
+    font-weight: bold;
+    color: #006363;
+    letter-spacing: 1px;
+    
+}

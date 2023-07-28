@@ -1,0 +1,17 @@
+
+#complain_form{
+    margin-block: 50px;
+}
+#complain_form .form_box{
+    /* background-color: #eee; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    width: 850px;
+    border-radius: 8px;
+    padding: 20px;
+}
+#complain_form .form_box form label{
+    text-transform: capitalize;
+    margin-bottom: 8px;
+    font-weight: bold;
+    margin-top: 10px;
+}

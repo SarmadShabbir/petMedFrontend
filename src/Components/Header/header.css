@@ -1,0 +1,55 @@
+
+header{
+    background-color: white;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.068);
+    position: sticky;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    /* height: 80px; */
+}
+header .navbar{
+    z-index: 999;
+}
+header .navbar .navbar-expand-lg{
+    padding: 0 !important;
+}
+header .navbar .container-fluid {
+    padding: 0 !important;
+}
+header .logo_img{
+    width: 160px;
+}
+header ul{
+    padding: 0;
+    margin: 0;
+}
+header ul li{
+    padding: 0px 20px;
+}
+header ul li a{
+    text-transform: capitalize;
+    font-size: 18px !important;
+    color: black !important;
+    /* font-weight: 500 !important; */
+}
+header .login_box{
+    background-color: #008081;
+    width: 170px;
+    margin-left: 160px;
+
+}
+header .login_box span{
+    font-size: 26px;
+    color: white;
+    font-weight: bold;
+    padding: 33px 20px;
+}
+header .login_box #box_icon{
+    font-size: 26px;
+    color: white !important;
+}
+.paitent__icon{
+    color:#008081;
+}
