@@ -12,6 +12,7 @@ import Blog from './Components/Blogs/Blog';
 import Lab from './Components/Labs/Lab';
 import DoctorSpecilists from './Components/Doctor Specialists/DoctorSpecilists';
 import Error404 from './Components/ErrorPage/404error';
+import Specialist from './Components/Doctor Specialists/Specialist';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/blog' element={<Blog />} />
           <Route path='/labs' element={<Lab />} />
           <Route path='/doctor-specialists' element={<DoctorSpecilists />} />
+          <Route path='/doctor-specialists/:specialization' element={<Specialist />} />
           <Route path='*' element={<Error404 />} />
         </Routes>
       </BrowserRouter>

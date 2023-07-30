@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './banner.css';
 import { Link } from 'react-router-dom';
 import cat from '../../assets/cat.png';
@@ -8,6 +8,17 @@ import fish from '../../assets/fish.png';
 import reptile from '../../assets/reptile.png';
 
 const Banner = () => {
+  const [specialization, setSpecialization] = useState([
+    'animal welfare',
+    'Behavioral medicine',
+    'Dentistry',
+    'Dermatology',
+    'Laboratory animal medicine',
+    'Microbiology',
+    'Nutrition',
+    'Ophthalmology',
+  ]);
+
   useEffect(() => {
     $(document).ready(function () {
       $('#first_owl').owlCarousel({
@@ -178,84 +189,35 @@ const Banner = () => {
                         </h3>
                       </div>
                       <div className='category mt-4'>
+                        {specialization.map((values) => {
+                          const pascalCaseValue = values
+                            .replace(
+                              /\w+/g,
+                              (word) =>
+                                word.charAt(0).toUpperCase() + word.slice(1)
+                            )
+                            .replace(/\s+/g, '');
+
+                          return (
+                            <Link
+                              to={`/doctor-specialists/${pascalCaseValue}`}
+                              key={pascalCaseValue}
+                            >
+                              <span
+                                className='badge text-bg-warning'
+                                data-bs-dismiss='modal'
+                              >
+                                {values}
+                              </span>
+                            </Link>
+                          );
+                        })}
                         <Link to={'/doctor-specialists'}>
                           <span
                             className='badge text-bg-warning'
                             data-bs-dismiss='modal'
                           >
-                            Food animal
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-info'
-                            data-bs-dismiss='modal'
-                          >
-                            Beef cattle
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-info'
-                            data-bs-dismiss='modal'
-                          >
-                            Nutrition
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-primary'
-                            data-bs-dismiss='modal'
-                          >
-                            shelter medicine
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-secondary'
-                            data-bs-dismiss='modal'
-                          >
-                            Reptile and amphibian
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-light'
-                            data-bs-dismiss='modal'
-                          >
-                            Bacteriology
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-dark'
-                            data-bs-dismiss='modal'
-                          >
-                            Parasitology
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-dark'
-                            data-bs-dismiss='modal'
-                          >
-                            Clinical pathology
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-dark'
-                            data-bs-dismiss='modal'
-                          >
-                            Small animal surgery
-                          </span>
-                        </Link>
-                        <Link to={'/doctor-specialists'}>
-                          <span
-                            className='badge text-bg-dark'
-                            data-bs-dismiss='modal'
-                          >
-                            large animal surgery
+                            View All Specialists
                           </span>
                         </Link>
                       </div>
@@ -270,9 +232,6 @@ const Banner = () => {
                   data-bs-dismiss='modal'
                 >
                   Close
-                </button>
-                <button type='button' className='btn btn-primary'>
-                  Save changes
                 </button>
               </div>
             </div>

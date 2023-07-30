@@ -16,7 +16,7 @@ const Blog = () => {
         'http://localhost:8000/api/admin/getAllBlogs'
       );
       try {
-        setblog_category(blogs.data.data);
+        setblog_category(blogs.data.blogs);
         const timer = setTimeout(() => {
           setLoading(false);
         }, 500);

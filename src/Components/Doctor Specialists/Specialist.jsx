@@ -1,29 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './specialists.css';
 import BookDoctor from './BookDoctor';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import Loader from '../../../Loader';
+import axios from 'axios';
 
-const DoctorSpecilists = () => {
-  const [doctors, setDoctors] = useState();
-  const [currentDoc, setCurrentDoctor] = useState({
-    imgUrl: '',
-    doctor_name: '',
-    special: '',
-    experience: '',
-  });
+const Specialist = () => {
+  const [specialists, setSpecialists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { specialization } = useParams();
 
-  // fetching Doctors
+  // converting parameter
+  function convertToNormalCase(camelOrPascalCase) {
+    return camelOrPascalCase
+      .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before each uppercase letter
+      .replace(/([A-Z])([A-Z][a-z])/g, '$1 $2') // Add space between consecutive uppercase letters followed by lowercase letters
+      .split(/\s+/) // Split the string by spaces
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter of each word and convert the rest to lowercase
+      .join(' '); // Join the words with spaces
+  }
+  const parsedData = convertToNormalCase(specialization);
+  // fetching specialization based
   useEffect(() => {
-    const fetchDoctor = async () => {
-      const fetched = await axios.get(
-        'http://localhost:8000/api/doctor/fetchAllDoctors'
-      );
+    const fetchSpecialists = async () => {
       try {
-        setDoctors(fetched.data.doctors);
+        const fetched = await axios.get(
+          `http://localhost:8000/api/doctor/${specialization}`
+        );
+        setSpecialists(fetched.data.doctor);
         const timer = setTimeout(() => {
           setLoading(false);
         }, 500);
@@ -31,8 +37,15 @@ const DoctorSpecilists = () => {
         console.log(err);
       }
     };
-    fetchDoctor();
+    fetchSpecialists();
   }, []);
+
+  const [currentDoc, setCurrentDoctor] = useState({
+    imgUrl: '',
+    doctor_name: '',
+    special: '',
+    experience: '',
+  });
 
   return (
     <>
@@ -45,7 +58,7 @@ const DoctorSpecilists = () => {
             <div className='container'>
               <div className='row'>
                 <div className='col-12 text-center text-capitalize'>
-                  <h1>doctors specialists</h1>
+                  <h1>{parsedData + ' ' + 'Vets'}</h1>
                 </div>
               </div>
             </div>
@@ -53,9 +66,9 @@ const DoctorSpecilists = () => {
           <section id='doctos_category'>
             <div className='container py-5'>
               <div className='row'>
-                {doctors.map((data) => {
+                {specialists.map((data) => {
                   return (
-                    <div className='col-4 mb-3' key={data._id}>
+                    <div className='col-4 mb-3' key={data.id}>
                       <div class='card'>
                         <img
                           src={`../../upload/${data.profilePhoto}`}
@@ -117,4 +130,4 @@ const DoctorSpecilists = () => {
   );
 };
 
-export default DoctorSpecilists;
+export default Specialist;

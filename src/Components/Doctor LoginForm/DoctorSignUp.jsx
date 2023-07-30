@@ -105,7 +105,11 @@ const DoctorSignUp = () => {
                   <nav className='navbar navbar-expand-lg'>
                     <div className='container-fluid'>
                       <div className='logo_img'>
-                        <span className='navbar-brand' style={{cursor: "pointer"}} onClick={() => navigate('/')}>
+                        <span
+                          className='navbar-brand'
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => navigate('/')}
+                        >
                           <img className='w-100' src={logo} alt='' />
                         </span>
                       </div>
@@ -258,16 +262,16 @@ const DoctorSignUp = () => {
                             <option value='' selected>
                               select specialization
                             </option>
-                            <option value='Animal welfare'>
-                              animal welfare
+                            <option value='Animal Welfare'>
+                              Animal Welfare
                             </option>
-                            <option value='Behavioral medicine'>
-                              Behavioral medicine
+                            <option value='Behavioral Medicine'>
+                              Behavioral Medicine
                             </option>
                             <option value='Dentistry'>Dentistry</option>
                             <option value='Dermatology'>Dermatology</option>
-                            <option value='Laboratory animal medicine'>
-                              Laboratory animal medicine
+                            <option value='Laboratory Animal Medicine'>
+                              Laboratory Animal Medicine
                             </option>
                             <option value='Microbiology'>Microbiology</option>
                             <option value='Nutrition'>Nutrition</option>
