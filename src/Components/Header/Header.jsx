@@ -13,8 +13,8 @@ const Header = () => {
   useEffect(() => {
     const patientData = localStorage.getItem('patient');
     if (patientData) {
-      setPaitent(parsedPatientData);
       const parsedPatientData = JSON.parse(patientData);
+      setPaitent(parsedPatientData);
     }
     const doctorData = localStorage.getItem('doctor');
     if (doctorData) {

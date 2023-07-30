@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './banner.css';
 import { Link } from 'react-router-dom';
 import cat from '../../assets/cat.png';
@@ -8,6 +8,28 @@ import fish from '../../assets/fish.png';
 import reptile from '../../assets/reptile.png';
 
 const Banner = () => {
+  useEffect(() => {
+    $(document).ready(function () {
+      $('#first_owl').owlCarousel({
+        items: 5,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 3800,
+        responsiveClass: true,
+      });
+
+      $('#owl_two').owlCarousel({
+        items: 3,
+        margin: 60,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        autoplayTimeout: 3800,
+        responsiveClass: true,
+      });
+    });
+  }, []);
   return (
     <>
       <section id='banner'>
@@ -157,50 +179,82 @@ const Banner = () => {
                       </div>
                       <div className='category mt-4'>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-warning'>
+                          <span
+                            className='badge text-bg-warning'
+                            data-bs-dismiss='modal'
+                          >
                             Food animal
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-info'>
+                          <span
+                            className='badge text-bg-info'
+                            data-bs-dismiss='modal'
+                          >
                             Beef cattle
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-info'>Nutrition</span>
+                          <span
+                            className='badge text-bg-info'
+                            data-bs-dismiss='modal'
+                          >
+                            Nutrition
+                          </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-primary'>
+                          <span
+                            className='badge text-bg-primary'
+                            data-bs-dismiss='modal'
+                          >
                             shelter medicine
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-secondary'>
+                          <span
+                            className='badge text-bg-secondary'
+                            data-bs-dismiss='modal'
+                          >
                             Reptile and amphibian
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-light'>
+                          <span
+                            className='badge text-bg-light'
+                            data-bs-dismiss='modal'
+                          >
                             Bacteriology
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-dark'>
+                          <span
+                            className='badge text-bg-dark'
+                            data-bs-dismiss='modal'
+                          >
                             Parasitology
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-dark'>
+                          <span
+                            className='badge text-bg-dark'
+                            data-bs-dismiss='modal'
+                          >
                             Clinical pathology
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-dark'>
+                          <span
+                            className='badge text-bg-dark'
+                            data-bs-dismiss='modal'
+                          >
                             Small animal surgery
                           </span>
                         </Link>
                         <Link to={'/doctor-specialists'}>
-                          <span className='badge text-bg-dark'>
+                          <span
+                            className='badge text-bg-dark'
+                            data-bs-dismiss='modal'
+                          >
                             large animal surgery
                           </span>
                         </Link>
