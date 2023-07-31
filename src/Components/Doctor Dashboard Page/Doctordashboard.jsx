@@ -149,7 +149,7 @@ const Doctordashboard = () => {
     e.preventDefault();
 
     axios
-      .put('http://localhost:8000/api/doctor/updateDoctor', updatedData)
+      .patch('http://localhost:8000/api/doctor/updateDoctor', updatedData)
       .then((response) => {
         if (response.data.status === 'SUCCESS') {
           toast.success(response.data.message_en, {
@@ -173,7 +173,7 @@ const Doctordashboard = () => {
     e.preventDefault();
 
     axios
-      .put('http://localhost:8000/api/doctor/updatePassword', passwordData)
+      .patch('http://localhost:8000/api/doctor/updatePassword', passwordData)
       .then((response) => {
         if (response.data.status === 'SUCCESS') {
           toast.success(response.data.message_en, {
