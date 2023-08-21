@@ -1,0 +1,448 @@
+import React from 'react'
+import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
+import './admin.css'
+
+
+
+
+const Admin = () => {
+    let adminblog_category = [
+        { id: 1, blogImg: '/blog_one.jpg' },
+        { id: 2, blogImg: '/blogtwo.jpg' },
+        { id: 3, blogImg: '/blogthree.jpg' },
+        { id: 4, blogImg: '/blogfour.jpg' },
+        { id: 5, blogImg: '/blogfive.jpg' },
+        { id: 6, blogImg: '/blogsix.jpg' }
+    ]
+
+    let adminlabs_category = [
+        { id: 1, imgUrl: 'labone.jpg', heading: 'university of diagnostic laboratory, lahore', address: 'outfall road, uvas, lahore', phone: '03058983983' },
+        { id: 2, imgUrl: 'labtwo.jpg', heading: 'veterinary diagnostic laboratory lahore', address: '13-A/1,gulshan-e-mustafa society,johar town', phone: '03048983983' },
+        { id: 3, imgUrl: 'labthree.jpg', heading: 'the vets animal hospital,lahore', address: '123-d,zanjani lane, gulberg-2 lahore', phone: '03058983983' },
+        { id: 4, imgUrl: 'labfour.jpg', heading: 'jamshed pets hospital,lahore', address: '123-d,zanjani lane, gulberg-2 lahore', phone: '03058983983' },
+        { id: 5, imgUrl: 'lab5.jpg', heading: 'rana pets clinic, islamabad', address: '123-d,zanjani lane, gulberg-2 lahore', phone: '03058983983' },
+        { id: 6, imgUrl: 'labone.jpg', heading: 'center for animal diagnostic', address: '123-d,zanjani lane, gulberg-2 lahore', phone: '03058983983' },
+    ]
+
+    let admindoctors_category = [
+        { id: 1, imgUrl: 'boyone.jpg', doctor_name: 'abdullah', special: 'dogs specialist', experience: '4 years of experience' },
+        { id: 2, imgUrl: 'boytwo.jpg', doctor_name: 'muzamil', special: 'reptile specialist', experience: '3 years of experience' },
+        { id: 3, imgUrl: 'boyfour.jpg', doctor_name: 'hannan', special: 'fishs specialist', experience: '3 years of experience' },
+        { id: 4, imgUrl: 'femaletwo.jpg', doctor_name: 'tokyo', special: 'nuerology specialist', experience: '3 years of experience' },
+        { id: 5, imgUrl: 'femalethree.jpg', doctor_name: 'carla', special: 'nutrition specialist', experience: '3 years of experience' },
+    ]
+
+    return (
+        <>
+            <Header />
+            <section id="admin">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-3 p-0">
+                            <aside>
+                                <ul className='nav nav-pills flex-column' id='myTab'>
+                                    <li className='nav-item'>
+                                        <a href="#viewvet" data-bs-toggle="pill" className=' nav-link active'>vets</a>
+
+                                    </li>
+                                    {/* <li className='nav-item'>
+                                        <a href="#appointment" data-bs-toggle="pill" className='nav-link'>appointment</a>
+                                    </li> */}
+                                    <li className='nav-item'>
+                                        <a href="#manage" data-bs-toggle="pill" className='nav-link'>patients</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#viewlab" data-bs-toggle="pill" className='nav-link'>laboratory</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#contact" data-bs-toggle="pill" className='nav-link'>add laboratory</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#editlab" data-bs-toggle="pill" className='nav-link'>edit laboratory</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#viewBlog" data-bs-toggle="pill" className='nav-link'>blogs</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#password" data-bs-toggle="pill" className='nav-link'>add blogs</a>
+                                    </li>
+                                    <li className='nav-item'>
+                                        <a href="#editblog" data-bs-toggle="pill" className='nav-link'>edit blogs</a>
+                                    </li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div className="col-9 dashboard_content">
+                            <div className="tab-content">
+                                <div className="tab-pane fade " id="home">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>hi dr.abdullah</h4>
+                                    </div>
+                                    <div className="progress_work">
+                                        <div className="row">
+                                            <div className="col-4 text-capitalize d-flex align-items-center">
+                                                <span className='me-2'>0</span><p>profile views</p>
+                                            </div>
+                                            <div className="col-4 text-capitalize d-flex align-items-center">
+                                                <span className='me-2'>0</span> <p>future appoitments</p>
+                                            </div>
+                                            <div className="col-4 text-capitalize d-flex align-items-center">
+                                                <span className='me-2'>0</span> <p>patient appointments</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="appointment">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>appointments</h4>
+                                    </div>
+                                    <div className="progress_work">
+                                        <div className="row">
+                                            <div className="col-6 text-capitalize d-flex align-items-center">
+                                                <span className='me-2'>0</span> <p>future appoitments</p>
+                                            </div>
+                                            <div className="col-6 text-capitalize d-flex align-items-center">
+                                                <span className='me-2'>0</span> <p>patient booked appointments</p>
+                                            </div>
+                                            <div className="col-12 mt-3 text-center text-capitalize">
+                                                <span id="nothing">no appointments found</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="manage">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4 className='fw-bold'>patients</h4>
+                                    </div>
+                                    <div className="display_appointments mt-5">
+                                        <div className="row">
+                                            <div className="col-12">
+                                                <table className="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">time</th>
+                                                            <th scope="col">date</th>
+                                                            <th scope="col">patient</th>
+                                                            <th scope="col">phone</th>
+                                                            <th scope="col">status</th>
+                                                            <th scope="col">action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">07:00</th>
+                                                            <td>26 june 2023</td>
+                                                            <td>asghar ali</td>
+                                                            <td>+92 304958686</td>
+                                                            <td><span class="badge bg-primary text-capitalize">start oppt</span></td>
+                                                            <td><i data-bs-toggle="modal" data-bs-target="#modal2" class="fa-solid fa-pen-to-square"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">07:30</th>
+                                                            <td>26 june 2023</td>
+                                                            <td>tayyad</td>
+                                                            <td>+92 304958686</td>
+                                                            <td><span class="badge bg-danger text-capitalize">cancelled</span></td>
+                                                            <td><i data-bs-toggle="modal" data-bs-target="#modal2" class="fa-solid fa-pen-to-square"></i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row">08:20</th>
+                                                            <td>26 june 2023</td>
+                                                            <td>mahnoor</td>
+                                                            <td>+92 304958686</td>
+                                                            <td><span class="badge bg-primary text-capitalize">start oppt</span></td>
+                                                            <td><i data-bs-toggle="modal" data-bs-target="#modal2" class="fa-solid fa-pen-to-square"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="contact">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>add laboratory</h4>
+                                    </div>
+                                    <div className="contact_info">
+                                        <form action="" method="post">
+                                            <div className="row">
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory name</label>
+                                                    <input type="text" name="" placeholder='laboratory name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory email</label>
+                                                    <input type="email" name="" placeholder='laboratory name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory category</label>
+                                                    <select name="" className='form-select' id="">
+                                                        <option value="" selected>labs category</option>
+                                                        <option value="">University Of Diagnostic</option>
+                                                        <option value="">Veterinary Diagnostic</option>
+                                                        <option value="">The Vets Animal lab</option>
+                                                        <option value="">Center For Animal Diagnostic</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-6 text-capitalize">
+                                                    <label htmlFor="">address</label>
+                                                    <input type="text" placeholder='lab address' className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <textarea placeholder='write' className="form-control" id="" cols="30" rows="6"></textarea>
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <input type="file" className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 text-end mt-5">
+                                                    <button type='submit' className="btn btn-secondary text-capitalize">save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="editlab">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>edit laboratory</h4>
+                                    </div>
+                                    <div className="contact_info">
+                                        <form action="" method="post">
+                                            <div className="row">
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory name</label>
+                                                    <input type="text" name="" placeholder='laboratory name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory email</label>
+                                                    <input type="email" name="" placeholder='laboratory name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">laboratory category</label>
+                                                    <select name="" className='form-select' id="">
+                                                        <option value="" selected>labs category</option>
+                                                        <option value="">University Of Diagnostic</option>
+                                                        <option value="">Veterinary Diagnostic</option>
+                                                        <option value="">The Vets Animal lab</option>
+                                                        <option value="">Center For Animal Diagnostic</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-6 text-capitalize">
+                                                    <label htmlFor="">address</label>
+                                                    <input type="text" placeholder='lab address' className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <textarea placeholder='write' className="form-control" id="" cols="30" rows="6"></textarea>
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <input type="file" className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 text-end mt-5">
+                                                    <button type='submit' className="btn btn-secondary text-capitalize">save</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade show active" id='viewvet'>
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>vets</h4>
+                                    </div>
+                                    <div className="view_blogs mt-4">
+                                        <div className="row">
+                                            {
+                                                admindoctors_category.map((data) => {
+                                                    return (
+                                                        <div className="col-4 mb-3" key={data.id}>
+                                                            <div class="card">
+                                                                <img src={data.imgUrl} class="card-img-top" alt="..." />
+                                                                <div class="card-body">
+                                                                    <h5 class="card-title"><span>name: </span>{data.doctor_name}</h5>
+                                                                    <p class="card-text mb-2"><span>specialist: </span>{data.special}</p>
+                                                                    <p class="card-text"><span>experience: </span>{data.experience}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id='viewlab'>
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>view laboratory</h4>
+                                    </div>
+                                    <div className="view_blogs mt-4">
+                                        <div className="row">
+                                            {
+                                                adminlabs_category.map((data) => {
+                                                    return (
+                                                        <div className="col-4 mb-3" key={data.id}>
+                                                            <div className="card">
+                                                                <img src={data.imgUrl} className="card-img-top" />
+                                                                <div className="card-body">
+                                                                    <h5 className="card-title">{data.heading}</h5>
+                                                                    <p className="card-text"><i class="fa-solid fa-location-dot me-2"></i>{data.address}</p>
+                                                                    <span><i class="fa-solid fa-phone me-2"></i>{data.phone}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id='viewBlog'>
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>view blogs</h4>
+                                    </div>
+                                    <div className="view_blogs mt-4">
+                                        <div className="row">
+                                            {
+                                                adminblog_category.map((data) => {
+                                                    return (
+                                                        <div className="col-4 mb-3" key={data.id}>
+                                                            <div className="card">
+                                                                <img src={data.blogImg} className="card-img-top" alt="..." />
+                                                                <div className="card-body">
+                                                                    <span>april 07, 2020 admin <span className="icon mx-2"><i class="fa-solid fa-comment"></i> 3</span></span>
+                                                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="password">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>add blogs</h4>
+                                    </div>
+                                    <div className="contact_info">
+                                        <form action="" method="post">
+                                            <div className="row">
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">blog title</label>
+                                                    <input type="text" name="" placeholder='blog title' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">author name</label>
+                                                    <input type="text" name="" placeholder='author name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">blog category</label>
+                                                    <select name="" className='form-select' id="">
+                                                        <option value="" selected>blog category</option>
+                                                        <option value="">health</option>
+                                                        <option value="">safety</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-6 text-capitalize">
+                                                    <label htmlFor="">tags</label>
+                                                    <input type="text" placeholder='tags' className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <textarea className="form-control" id="" cols="30" rows="6"></textarea>
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <input type="file" className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 text-end mt-5">
+                                                    <button type='submit' className="btn btn-secondary text-capitalize">publish blog</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div className="tab-pane fade" id="editblog">
+                                    <div className="sub_heading text-capitalize">
+                                        <h4>edit blogs</h4>
+                                    </div>
+                                    <div className="contact_info">
+                                        <form action="" method="post">
+                                            <div className="row">
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">blog title</label>
+                                                    <input type="text" name="" placeholder='blog title' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">author name</label>
+                                                    <input type="text" name="" placeholder='author name' className="form-control" required />
+                                                </div>
+                                                <div className="col-6 text-capitalize mb-3">
+                                                    <label htmlFor="">blog category</label>
+                                                    <select name="" className='form-select' id="">
+                                                        <option value="" selected>blog category</option>
+                                                        <option value="">health</option>
+                                                        <option value="">safety</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-6 text-capitalize">
+                                                    <label htmlFor="">tags</label>
+                                                    <input type="text" placeholder='tags' className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <textarea className="form-control" id="" cols="30" rows="6"></textarea>
+                                                </div>
+                                                <div className="col-12 mb-3">
+                                                    <input type="file" className="form-control" id="" />
+                                                </div>
+                                                <div className="col-12 text-end mt-5">
+                                                    <button type='submit' className="btn btn-secondary text-capitalize">publish blog</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div className="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1 className="modal-title fs-5 text-capitalize fw-semibold" id="exampleModalLabel">abdullah</h1>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="" method="post">
+                                <div className="modal-body">
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="col-6 mb-3">
+                                                <input type="text" value="26/06/2023" name="" className="form-control" />
+                                            </div>
+                                            <div className="col-6 mb-3">
+                                                <select name="" className="form-select">
+                                                    <option value="" selected>07:00 - 07:30</option>
+                                                    <option value="">07:30 - 08:00</option>
+                                                    <option value="">08:00 - 09:00</option>
+                                                    <option value="">09:00 - 10:00</option>
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" className="btn btn-primary">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <Footer />
+        </>
+    )
+}
+
+export default Admin

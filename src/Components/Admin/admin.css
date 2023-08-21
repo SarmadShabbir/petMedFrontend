@@ -1,0 +1,150 @@
+
+
+#admin{
+    padding: 80px 0px;
+    background-color: #eee;
+}
+#admin aside{
+    background-color: #008081;
+    height: 800px !important;
+    /* padding: 0px; */
+    border-radius: 0px !important;
+    /* padding: 20px 20px; */
+}
+#admin aside ul{
+    margin: 0;
+    padding: 0;
+}
+#admin aside ul li{
+    padding: 6px 0px;
+    cursor: pointer;
+    transition: all .3s linear;
+}
+/* #admin aside ul li:hover{
+    background-color: rgb(60, 209, 2);
+} */
+#admin aside ul li a{
+    text-transform: capitalize;
+    text-decoration: none;
+    color: white;
+}
+#admin .dashboard_content{
+    background-color: white;
+    padding: 16px 20px;
+    margin-top: 10px;
+}
+#admin .dashboard_content .sub_heading{
+    border-bottom: 1px solid #0081819c;
+}
+#admin .dashboard_content .progress_work{
+    background-color: #eee;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 6px;
+}
+#admin .dashboard_content .progress_work span{
+    font-size: 40px;
+    color: #006868;
+}
+#admin .dashboard_content .progress_work p{
+    margin-bottom: 0px;
+    color: rgba(128, 128, 128, 0.774);
+}
+#admin .dashboard_content .progress_work #nothing{
+    font-size: 22px !important;
+}
+#admin .dashboard_content .contact_info{
+    padding: 24px 0px;
+}
+#admin .dashboard_content .contact_info form label{
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #006868;
+}
+#admin .dashboard_content .contact_info form input:focus{
+    box-shadow: none;
+}
+#admin .dashboard_content #manage .slots_work{
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+#admin .dashboard_content #manage button{
+    font-size: 14px;
+    text-transform: capitalize;
+}
+#admin .dashboard_content #manage input{
+    text-transform: capitalize;
+}
+#admin .dashboard_content #manage select{
+    text-transform: capitalize;
+}
+#admin .dashboard_content #manage select:focus{
+    box-shadow: none;
+}
+#admin .dashboard_content #manage input:focus{
+    box-shadow: none;
+}
+#admin .dashboard_content #manage i{
+    cursor: pointer;
+}
+#admin .dashboard_content #manage .display_appointments{
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-top: 20px;
+    border-radius: 6px;
+}
+#admin .dashboard_content #manage .display_appointments table thead th{
+    text-transform: capitalize;
+}
+#admin .dashboard_content #manage .display_appointments table tbody td{
+    text-transform: capitalize;
+}
+
+#viewlab h5{
+    font-weight: bold;
+    font-size: 18px;
+    text-transform: capitalize;
+    margin-bottom: 20px;
+    color: rgb(97, 97, 97);
+}
+#viewlab p{
+    font-size: 14px;
+    color: gray;
+}
+#viewlab span{
+    color: gray;
+}
+h4{
+    font-size: 30px;
+    color: rgb(66, 66, 66);
+    text-transform: capitalize;
+    font-weight: bold;
+}
+#viewvet h5{
+    text-transform: capitalize;
+    color: gray;
+}
+#viewvet .card .card-body{
+    padding: 12px;
+}
+#viewvet h5 span{
+    font-weight: bold;
+    color: rgb(71, 71, 71);
+    text-transform: capitalize;
+}
+#viewvet p{
+    text-transform: capitalize;
+    color: rgba(128, 128, 128, 0.726) ;
+    font-size: 14px;
+    font-weight: bold;
+}
+#viewvet p span{
+    font-weight: bold;
+    color: rgb(71, 71, 71);
+    text-transform: capitalize;
+    font-size: 18px;
+}
