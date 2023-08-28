@@ -1,10 +1,21 @@
-import styled from 'styled-components';
-import Logo from './src/assets/logo.png';
+import styled from "styled-components";
+import Logo from "./src/assets/logo.png";
+import SyncLoader from "react-spinners/SyncLoader";
 
-function Loader() {
+function Loader({spinner, size, containerHeight}) {
   return (
-    <LoaderWrapper>
-      <img src={Logo} alt='logo' className='logo' />
+    <LoaderWrapper style={{height: containerHeight}}>
+      {spinner ? (
+        <SyncLoader
+          color={"#008081"}
+          loading={spinner}
+          size={size}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <img src={Logo} alt="logo" className="logo" />
+      )}
     </LoaderWrapper>
   );
 }
@@ -18,7 +29,7 @@ const LoaderWrapper = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100%;
-  .logo{
+  .logo {
     width: 200px;
     margin-bottom: 1rem;
   }

@@ -41,10 +41,11 @@ const Specialist = () => {
   }, []);
 
   const [currentDoc, setCurrentDoctor] = useState({
-    imgUrl: '',
-    doctor_name: '',
-    special: '',
-    experience: '',
+    imgUrl: "",
+    doctor_name: "",
+    special: "",
+    experience: "",
+    doctorId: ''
   });
 
   return (
@@ -85,6 +86,7 @@ const Specialist = () => {
                               doctor_name: data.name,
                               special: data.specialization,
                               city: data.city,
+                              doctorId: data._id,
                             });
                           }}
                         />
@@ -121,6 +123,7 @@ const Specialist = () => {
             <BookDoctor
               imgUrl={currentDoc.imgUrl}
               doctor_name={currentDoc.doctor_name}
+              doctorId = {currentDoc.doctorId}
             />
           </section>
           <Footer />

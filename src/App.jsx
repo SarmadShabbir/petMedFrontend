@@ -13,7 +13,8 @@ import Lab from "./Components/Labs/Lab";
 import DoctorSpecilists from "./Components/Doctor Specialists/DoctorSpecilists";
 import Error404 from "./Components/ErrorPage/404error";
 import Specialist from "./Components/Doctor Specialists/Specialist";
-import Admin from './Components/Admin/Admin'
+import Admin from "./Components/Admin/Admin";
+import AdminLogin from "./Components/Admin/AdminLogin";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/userSignUp" element={<SignUp />} />
           <Route path="/Doctorlogin" element={<Doctorlogin />} />
           <Route path="/DoctorSignUp" element={<DoctorSignUp />} />
+          <Route path="/AdminLogin" element={<AdminLogin />} />
           <Route path="/userdashboard" element={<Dashboard />} />
           <Route path="/doctor-dashboard" element={<Doctordashboard />} />
           <Route path="/complain-form" element={<ComplaintForm />} />

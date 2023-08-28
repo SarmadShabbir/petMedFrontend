@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../../Loader";
 
-const Login = () => {
+const AdminLogin = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -31,22 +31,20 @@ const Login = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/paitent/authenticatePaitent", formData)
+      .post("http://localhost:8000/api/admin/authenticateAdmin", formData)
       .then((response) => {
-        {
-          response.data.status === "SUCCESS"
-            ? toast.success(response.data.message_en, {
-                position: toast.POSITION.TOP_RIGHT,
-              })
-            : toast.error(response.data.message_en, {
-                position: toast.POSITION.TOP_RIGHT,
-              });
-        }
         if (response.data.status === "SUCCESS") {
-          localStorage.setItem("patient", JSON.stringify(response.data.data));
+          toast.success(response.data.message_en, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          localStorage.setItem("adminEmail", response.data.adminEmail);
           setTimeout(() => {
-            navigate("/userdashboard");
+            navigate("/Admin");
           }, 1000);
+        } else {
+          toast.error(response.data.message_en, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         }
       });
   };
@@ -86,20 +84,7 @@ const Login = () => {
                       <div
                         className="collapse navbar-collapse"
                         id="navbarSupportedContent"
-                      >
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                          <li className="nav-item text-capitalize d-flex align-items-center">
-                            new user?{" "}
-                            <Link
-                              className="nav-link active"
-                              aria-current="page"
-                              to={"/userSignUp"}
-                            >
-                              sign up
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
+                      ></div>
                     </div>
                   </nav>
                 </div>
@@ -147,7 +132,6 @@ const Login = () => {
                         <button type="submit" className="btn btn-secondary">
                           login
                         </button>
-                        <p style={{ marginTop: 40 + "px" }}>forget password?</p>
                       </div>
                     </form>
                   </div>
@@ -162,4 +146,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

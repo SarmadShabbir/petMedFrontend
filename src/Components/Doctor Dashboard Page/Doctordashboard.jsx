@@ -8,10 +8,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../../Loader";
 import { styled } from "styled-components";
-import { Avatar } from "@mui/material";
 import { useForm } from "react-hook-form";
+import UpdateAppointMent from "./UpdateAppointMent";
 
 const Doctordashboard = () => {
+  const [doctorAvailableSlots, setDoctorAvailableSlots] = useState([]);
+  const [appointmentCount, setAppointmentCount] = useState({
+    todayAppointments: 0,
+    futureAppointments: 0,
+  });
   const [slotsInfo, setSlotsInfo] = useState({
     to: "",
     from: "",
@@ -24,6 +29,11 @@ const Doctordashboard = () => {
   const [reRender, setReRender] = useState(false);
   const [loading, setloading] = useState(true);
   const [style, setStyle] = useState(false);
+  const [appointments, setAppointments] = useState(null);
+  const [searchDate, setSearchDate] = useState();
+  const [appointmentsRendering, setAppointmentsRendering] =
+    useState("View All");
+  const [appointmentLoading, setappointmentLoading] = useState(true);
   const {
     register,
     handleSubmit,
@@ -38,18 +48,19 @@ const Doctordashboard = () => {
     currentPassword: "",
     email: "",
   });
-  const [updateStatusData, setUpdatedStatusData] = useState({
-    newStatus: "",
-    doctorId: "",
-    customerId: "",
-    basicGroming: "",
-    medicines: "",
-    charges: "",
+  const [currentCustomer, setCurrentCustomer] = useState({
+    appointmentDate: null,
+    customerName: null,
+    customerId: null,
+    appointmentStatus: null,
+    appointmentId: null,
+    doctorImage: null,
+    doctorName: null,
   });
-
   function getMinDate() {
     const today = new Date();
-    return formatDate(today);
+    const todayDate = formatDate(today);
+    return todayDate;
   }
 
   function getMaxDate() {
@@ -73,14 +84,6 @@ const Doctordashboard = () => {
     setSlotsInfo((values) => ({ ...values, [name]: value }));
   };
 
-  // handleStatusChange
-
-  const handleStatusChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setUpdatedStatusData((values) => ({ ...values, [name]: value }));
-  };
-
   // handleChange
   const handleChange = (event) => {
     const name = event.target.name;
@@ -88,15 +91,65 @@ const Doctordashboard = () => {
     setUpdatedData((values) => ({ ...values, [name]: value }));
   };
 
+  // handle password Change
   const handlePasswordChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
     setPasswordData((values) => ({ ...values, [name]: value }));
   };
 
+  // handle slot delete
+  const slotDelete = async (_id) => {
+    try {
+      const requestData = { _id: _id };
+      const response = await axios.delete(
+        "http://localhost:8000/api/doctor/deleteSlot",
+        { data: requestData }
+      );
+
+      if (response.data.status === "SUCCESS") {
+        toast.success(response.data.message_en, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        toast.error(response.data.message_en, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting slot:", error);
+      toast.error("An error occurred while deleting the slot.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
+  // fetch slots
+  const fetchDoctorSlots = async () => {
+    try {
+      const doctorData = localStorage.getItem("doctor");
+      const parsedDoctorData = JSON.parse(doctorData);
+      const doctorId = parsedDoctorData._id;
+      axios
+        .get(
+          `http://localhost:8000/api/doctor/fetch/getDoctorSlots/${doctorId}`
+        )
+        .then((response) => {
+          setDoctorAvailableSlots(response.data.slots);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    fetchDoctorSlots();
     const timer = setTimeout(() => {
       setloading(false);
+      setappointmentLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -115,15 +168,18 @@ const Doctordashboard = () => {
         ...values,
         email: parsedDoctorData.email,
       }));
-      setUpdatedStatusData((values) => ({
-        ...values,
-        doctorId: parsedDoctorData._id,
-      }));
       setSlotsInfo((values) => ({
         ...values,
         doctorId: parsedDoctorData._id,
       }));
+      setCurrentCustomer((values) => ({
+        ...values,
+        doctorImage: parsedDoctorData.profilePhoto,
+        doctorName: parsedDoctorData.name,
+      }));
       setReRender(false);
+      fetchAppointmentSlots();
+      console.log(parsedDoctorData);
     }
   }, [reRender]);
 
@@ -191,6 +247,8 @@ const Doctordashboard = () => {
         }
       });
   };
+
+  // handle slot submit
   const handleSlotsSubmit = () => {
     axios
       .post("http://localhost:8000/api/doctor/addSlot", slotsInfo)
@@ -201,12 +259,220 @@ const Doctordashboard = () => {
               position: toast.POSITION.TOP_RIGHT,
             });
           }
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         } else {
           toast.error(response.data.message_en, {
             position: toast.POSITION.TOP_RIGHT,
           });
         }
       });
+  };
+
+  // appointment count
+  const findAppointmentCount = (convertedAppointments) => {
+    const currentDate = new Date();
+
+    let todayCount = 0;
+    let futureCount = 0;
+
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentDay = currentDate.getDate();
+
+    convertedAppointments.forEach((appointment) => {
+      const appointmentDate = new Date(appointment.appointmentDate);
+      const appointmentYear = appointmentDate.getFullYear();
+      const appointmentMonth = appointmentDate.getMonth();
+      const appointmentDay = appointmentDate.getDate();
+
+      if (
+        appointmentYear === currentYear &&
+        appointmentMonth === currentMonth &&
+        appointmentDay === currentDay
+      ) {
+        todayCount++;
+      } else if (appointmentDate > currentDate) {
+        futureCount++;
+      }
+    });
+
+    setAppointmentCount((prevData) => ({
+      ...prevData,
+      todayAppointments: todayCount,
+      futureAppointments: futureCount,
+    }));
+  };
+
+  // fetch appointment slots
+  const fetchAppointmentSlots = async () => {
+    try {
+      const doctorData = localStorage.getItem("doctor");
+      const parsedDoctorData = JSON.parse(doctorData);
+      if (parsedDoctorData) {
+        const response = await axios.get(
+          `http://localhost:8000/api/doctor/fetch/allAppointments/${parsedDoctorData._id}`
+        );
+
+        const convertedAppointments = response.data.appointments.map(
+          (appointment) => {
+            const timestamp = appointment.appointmentDate;
+            const parsedDate = new Date(timestamp);
+            const formattedDate = parsedDate.toISOString().split("T")[0];
+            return {
+              ...appointment,
+              appointmentDate: formattedDate,
+            };
+          }
+        );
+        setAppointments(convertedAppointments);
+        findAppointmentCount(convertedAppointments);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // View All Appointments
+
+  const ViewAll = () => {
+    return (
+      <>
+        {appointmentLoading ? (
+          <tbody>
+            <tr>
+              <td style={{ width: "100%" }} colSpan={6}>
+                <Loader size={15} spinner={true} containerHeight={"10vh"} />
+              </td>
+            </tr>
+          </tbody>
+        ) : (
+          <tbody>
+            {appointments.map((appointment) => (
+              <tr key={appointment._id}>
+                <th scope="row">{appointment.to}</th>
+                <td>{appointment.appointmentDate}</td>
+                <td>{appointment.customerName}</td>
+                <td>{appointment.phoneNo}</td>
+                <td>
+                  {appointment.appointmentStatus === "In Queue" ? (
+                    <span className="badge bg-primary text-capitalize">
+                      {appointment.appointmentStatus}
+                    </span>
+                  ) : appointment.appointmentStatus === "Cancelled" ? (
+                    <span className="badge bg-danger text-capitalize">
+                      {appointment.appointmentStatus}
+                    </span>
+                  ) : appointment.appointmentStatus === "Completed" ? (
+                    <span className="badge bg-success text-capitalize">
+                      Completed
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </td>
+                <td>
+                  <i
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal2"
+                    className="fa-solid fa-pen-to-square"
+                    onClick={() => {
+                      setCurrentCustomer((prevData) => ({
+                        ...prevData,
+                        appointmentDate: appointment.appointmentDate,
+                        appointmentStatus: appointment.appointmentStatus,
+                        customerId: appointment.customerId,
+                        customerName: appointment.customerName,
+                        appointmentId: appointment._id,
+                      }));
+                    }}
+                  ></i>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        )}
+      </>
+    );
+  };
+
+  // find Appointments
+  const Find = () => {
+    const filteredAppointments = appointments.filter(
+      (appointment) => appointment.appointmentDate === searchDate
+    );
+
+    return (
+      <>
+        {appointmentLoading ? (
+          <tbody>
+            <tr>
+              <td style={{ width: "100%" }} colSpan={6}>
+                <Loader size={15} spinner={true} containerHeight={"10vh"} />
+              </td>
+            </tr>
+          </tbody>
+        ) : filteredAppointments.length > 0 ? (
+          <tbody>
+            {filteredAppointments.map((appointment) => (
+              <tr key={appointment._id}>
+                <th scope="row">{appointment.to}</th>
+                <td>{appointment.appointmentDate}</td>
+                <td>{appointment.customerName}</td>
+                <td>{appointment.phoneNo}</td>
+                <td>
+                  {appointment.appointmentStatus === "In Queue" ? (
+                    <span className="badge bg-primary text-capitalize">
+                      {appointment.appointmentStatus}
+                    </span>
+                  ) : appointment.appointmentStatus === "Cancelled" ? (
+                    <span className="badge bg-danger text-capitalize">
+                      {appointment.appointmentStatus}
+                    </span>
+                  ) : appointment.appointmentStatus === "Completed" ? (
+                    <span className="badge bg-success text-capitalize">
+                      Completed
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </td>
+                <td>
+                  <i
+                    style={{
+                      cursor: "pointer",
+                    }}
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal2"
+                    className="fa-solid fa-pen-to-square"
+                    onClick={() => {
+                      setCurrentCustomer((prevData) => ({
+                        ...prevData,
+                        appointmentDate: appointment.appointmentDate,
+                        appointmentStatus: appointment.appointmentStatus,
+                        customerId: appointment.customerId,
+                        customerName: appointment.customerName,
+                        appointmentId: appointment._id,
+                      }));
+                    }}
+                  ></i>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <div className="row">
+            <div className="col-12 mt-3 text-center text-capitalize">
+              <span id="nothing">no appointments found</span>
+            </div>
+          </div>
+        )}
+      </>
+    );
   };
 
   return (
@@ -369,11 +635,15 @@ const Doctordashboard = () => {
                                 <p>profile views</p>
                               </div>
                               <div className="col-4 text-capitalize d-flex align-items-center">
-                                <span className="me-2">0</span>{" "}
+                                <span className="me-2">
+                                  {appointmentCount.futureAppointments}
+                                </span>
                                 <p>future appoitments</p>
                               </div>
                               <div className="col-4 text-capitalize d-flex align-items-center">
-                                <span className="me-2">0</span>{" "}
+                                <span className="me-2">
+                                  {appointmentCount.todayAppointments}
+                                </span>
                                 <p>patient appointments</p>
                               </div>
                             </div>
@@ -386,15 +656,16 @@ const Doctordashboard = () => {
                           <div className="progress_work">
                             <div className="row">
                               <div className="col-6 text-capitalize d-flex align-items-center">
-                                <span className="me-2">0</span>{" "}
+                                <span className="me-2">
+                                  {appointmentCount.futureAppointments}
+                                </span>
                                 <p>future appoitments</p>
                               </div>
                               <div className="col-6 text-capitalize d-flex align-items-center">
-                                <span className="me-2">0</span>{" "}
-                                <p>patient booked appointments</p>
-                              </div>
-                              <div className="col-12 mt-3 text-center text-capitalize">
-                                <span id="nothing">no appointments found</span>
+                                <span className="me-2">
+                                  {appointmentCount.todayAppointments}
+                                </span>
+                                <p>Today booked appointments</p>
                               </div>
                             </div>
                           </div>
@@ -402,26 +673,53 @@ const Doctordashboard = () => {
                             <div className="row">
                               <div className="col-3 text-capitalize">
                                 <input
-                                  type="search"
-                                  placeholder="search by patient name"
+                                  type="date"
                                   className="form-control"
+                                  value={searchDate}
+                                  name="searchDate"
+                                  onChange={(e) => {
+                                    setSearchDate(e.target.value);
+                                  }}
+                                  max={getMaxDate()}
+                                  min={getMinDate()}
                                 />
                               </div>
-                              <div className="col-3 text-capitalize">
-                                <input type="date" className="form-control" />
+                              <div
+                                className="col-1 text-capitalize"
+                                style={{ marginRight: "2%" }}
+                              >
+                                <button
+                                  className="btn btn-dark ml-3"
+                                  type="button"
+                                  onClick={() => {
+                                    setAppointmentsRendering("Find");
+                                    setappointmentLoading(true);
+                                    setTimeout(() => {
+                                      setappointmentLoading(false);
+                                    }, 1000);
+                                  }}
+                                >
+                                  Find
+                                </button>
                               </div>
                               <div className="col-3 text-capitalize">
                                 <button
                                   className="btn btn-secondary ml-3"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#exampleModal"
+                                  type="button"
+                                  onClick={() => {
+                                    setAppointmentsRendering("View All");
+                                    setappointmentLoading(true);
+                                    setTimeout(() => {
+                                      setappointmentLoading(false);
+                                    }, 1000);
+                                  }}
                                 >
-                                  Add Appointment
+                                  View All
                                 </button>
                               </div>
                             </div>
                           </QueryContainer>
-                          <AppointmentTable className="display_appointments mt-5">
+                          <AppointmentTable className="display_appointments mt-4">
                             <div className="row">
                               <div className="col-12">
                                 <table className="table">
@@ -435,81 +733,11 @@ const Doctordashboard = () => {
                                       <th scope="col">action</th>
                                     </tr>
                                   </thead>
-                                  <tbody>
-                                    <tr>
-                                      <th scope="row">07:00</th>
-                                      <td>26 june 2023</td>
-                                      <td>asghar ali</td>
-                                      <td>+92 304958686</td>
-                                      <td>
-                                        <span class="badge bg-primary text-capitalize">
-                                          start oppt
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <i
-                                          style={{ cursor: "pointer" }}
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modal2"
-                                          class="fa-solid fa-pen-to-square"
-                                        ></i>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">07:30</th>
-                                      <td>26 june 2023</td>
-                                      <td>tayyad</td>
-                                      <td>+92 304958686</td>
-                                      <td>
-                                        <span class="badge bg-danger text-capitalize">
-                                          cancelled
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <i
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modal2"
-                                          class="fa-solid fa-pen-to-square"
-                                        ></i>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">08:20</th>
-                                      <td>26 june 2023</td>
-                                      <td>mahnoor</td>
-                                      <td>+92 304958686</td>
-                                      <td>
-                                        <span class="badge bg-success text-capitalize">
-                                          Completed
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <i
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modal2"
-                                          class="fa-solid fa-pen-to-square"
-                                        ></i>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">08:20</th>
-                                      <td>26 june 2023</td>
-                                      <td>mahnoor</td>
-                                      <td>+92 304958686</td>
-                                      <td>
-                                        <span class="badge bg-secondary text-capitalize">
-                                          Coming Soon
-                                        </span>
-                                      </td>
-                                      <td>
-                                        <i
-                                          data-bs-toggle="modal"
-                                          data-bs-target="#modal2"
-                                          class="fa-solid fa-pen-to-square"
-                                        ></i>
-                                      </td>
-                                    </tr>
-                                  </tbody>
+                                  {appointmentsRendering === "View All" ? (
+                                    <ViewAll />
+                                  ) : (
+                                    <Find />
+                                  )}
                                 </table>
                               </div>
                             </div>
@@ -646,32 +874,35 @@ const Doctordashboard = () => {
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <th scope="row">26 june 2023</th>
-                                        <td>07:00</td>
-                                        <td>07:30</td>
-                                        <td>
-                                          <i
-                                            style={{ cursor: "pointer" }}
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal2"
-                                            class="fa-solid fa-pen-to-square"
-                                          ></i>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <th scope="row">26 june 2023</th>
-                                        <td>07:00</td>
-                                        <td>07:30</td>
-                                        <td>
-                                          <i
-                                            style={{ cursor: "pointer" }}
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#modal2"
-                                            class="fa-solid fa-pen-to-square"
-                                          ></i>
-                                        </td>
-                                      </tr>
+                                      {doctorAvailableSlots.length > 0 ? (
+                                        doctorAvailableSlots.map((slot) => {
+                                          return (
+                                            <tr key={slot._id}>
+                                              <td>{slot.slotDate}</td>
+                                              <td>{slot.from}</td>
+                                              <td>{slot.to}</td>
+                                              <td
+                                                onClick={() =>
+                                                  slotDelete(slot._id)
+                                                }
+                                              >
+                                                <i
+                                                  className="fa-solid fa-trash"
+                                                  style={{ color: "red" }}
+                                                ></i>
+                                              </td>
+                                            </tr>
+                                          );
+                                        })
+                                      ) : (
+                                        <div className="row">
+                                          <div className="col-12 mt-3 text-center text-capitalize">
+                                            <span id="nothing">
+                                              No Slot Found
+                                            </span>
+                                          </div>
+                                        </div>
+                                      )}
                                     </tbody>
                                   </table>
                                 </div>
@@ -841,171 +1072,14 @@ const Doctordashboard = () => {
                   </div>
                 </div>
               </section>
-              <section>
-                {/* <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Launch demo modal
-                </button> */}
-
-                <div
-                  className="modal fade"
-                  id="modal2"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div className="modal-dialog modal-lg">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h1
-                          className="modal-title fs-5 text-capitalize fw-semibold"
-                          id="exampleModalLabel"
-                          style={{ color: "#00797a" }}
-                        >
-                          Update Appointment
-                        </h1>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <form action="" method="post">
-                        <div className="modal-body">
-                          <div className="container">
-                            <div className="row">
-                              <div className="col-12 mb-3 d-flex justify-content-center">
-                                <Avatar sx={{ width: 100, height: 100 }} />
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-12 mb-3  d-flex justify-content-center">
-                                <h2 className="fs-5 text-capitalize fw-semibold pl-5">
-                                  Abdullah
-                                </h2>
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-6 mb-3">
-                                <input
-                                  type="text"
-                                  value="26/06/2023"
-                                  name=""
-                                  className="form-control"
-                                />
-                              </div>
-                              <div className="col-6 mb-3">
-                                <select
-                                  name="newStatus"
-                                  className="form-select"
-                                  onChange={(e) =>
-                                    setUpdatedStatusData((values) => ({
-                                      ...values,
-                                      newStatus: e.target.value,
-                                    }))
-                                  }
-                                >
-                                  <option value="" selected>
-                                    Update Status
-                                  </option>
-                                  <option value="Cancelled">Cancelled</option>
-                                  <option value="Completed">Completed</option>
-                                </select>
-                              </div>
-                            </div>
-                            {updateStatusData.newStatus === "Completed" && (
-                              <>
-                                <div className="row mt-6">
-                                  <div className="col-6">
-                                    <div class="form-floating mb-3">
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        name="basicGroming"
-                                        placeholder="Basic Groming"
-                                        required
-                                        autoComplete="on"
-                                        onChange={handleStatusChange}
-                                        value={updateStatusData.basicGroming}
-                                      />
-                                      <label
-                                        for="basicGroming"
-                                        style={{ fontWeight: "normal" }}
-                                      >
-                                        Basic Groming
-                                      </label>
-                                    </div>
-                                  </div>
-                                  <div className="col-6">
-                                    <div class="form-floating mb-3">
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        name="medicines"
-                                        placeholder="enter Medicines"
-                                        required
-                                        autoComplete="on"
-                                        onChange={handleStatusChange}
-                                        value={updateStatusData.medicines}
-                                      />
-                                      <label
-                                        for="medicines"
-                                        style={{ fontWeight: "normal" }}
-                                      >
-                                        Medicines
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="row d-flex justify-content-center">
-                                  <div className="col-6">
-                                    <div class="form-floating mb-3">
-                                      <input
-                                        type="text"
-                                        class="form-control"
-                                        name="charges"
-                                        placeholder="enter charges"
-                                        // onChange={handleChange}
-                                        // value={paitentData.firstName}
-                                        required
-                                        autoComplete="on"
-                                        onChange={handleStatusChange}
-                                        value={updateStatusData.charges}
-                                      />
-                                      <label
-                                        for="charges"
-                                        style={{ fontWeight: "normal" }}
-                                      >
-                                        Charges
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                        <div className="modal-footer">
-                          <button
-                            type="button"
-                            className="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            style={{ backgroundColor: "#00797a" }}
-                          >
-                            Save changes
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </section>
+              <UpdateAppointMent
+                appointmentDate={currentCustomer.appointmentDate}
+                appointmentStatus={currentCustomer.appointmentStatus}
+                customerName={currentCustomer.customerName}
+                appointmentId={currentCustomer.appointmentId}
+                doctorImage={currentCustomer.doctorImage}
+                doctorName={currentCustomer.doctorName}
+              />
               <ToastContainer />
             </>
           ) : (

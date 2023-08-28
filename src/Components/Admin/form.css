@@ -1,0 +1,83 @@
+
+.login_header{
+    background-color: white !important;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.068);
+}
+.login_header .logo_img{
+    width: 160px;
+}
+.login_header ul li a{
+    color: gray !important;
+    cursor: pointer;
+}
+.login_header ul .register{
+    color: gray;
+}
+#user_login .login_img{
+    width: 500px;
+}
+#user_login .login_form{
+    margin-top: 90px;
+}
+#user_login .login_form h4{
+    color: rgb(0, 128, 129);
+    font-size: 34px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+#user_login .login_form p{
+    color: rgba(128, 128, 128, 0.616);
+    margin-top: -4px;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+:is(#user_login, #user_signup)   form input{
+    border: none;
+    border: 2px solid gray;
+}
+:is(#user_login, #user_signup)   form input[type=file]::file-selector-button{
+    background-color: gray;
+    color: white;
+    padding-block: 10px;
+    border-radius: 0px;
+}
+:is(#user_login, #user_signup) form label{
+    text-transform: capitalize;
+}
+:is(#user_login, #user_signup)   form input:focus{
+    box-shadow: none;
+}
+:is(#user_login, #user_signup)   button{
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 10px 50px;
+    border-radius: 30px;
+}
+:is(#user_login, #user_signup)  .form_btn p{
+    margin-top: 30px;
+    margin-left: 60px;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#user_signup .login_img{
+    width: 540px;
+}
+#user_signup form .back{
+    color: gray !important;
+}
+#user_signup form select{
+    border: none;
+    border: 2px solid gray;
+    text-transform: capitalize;
+}
+#user_signup form select option{
+    text-transform: capitalize ;
+}
+#user_signup form select:focus{
+    box-shadow: none;
+}
