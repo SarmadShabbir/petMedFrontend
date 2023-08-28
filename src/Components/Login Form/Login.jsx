@@ -31,7 +31,7 @@ const Login = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/paitent/authenticatePaitent", formData)
+      .post("https://petmedbackend.onrender.com/api/paitent/authenticatePaitent", formData)
       .then((response) => {
         {
           response.data.status === "SUCCESS"

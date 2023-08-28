@@ -13,7 +13,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       const blogs = await axios.get(
-        'http://localhost:8000/api/admin/getAllBlogs'
+        'https://petmedbackend.onrender.com/api/admin/getAllBlogs'
       );
       try {
         setblog_category(blogs.data.blogs);

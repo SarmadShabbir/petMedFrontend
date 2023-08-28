@@ -45,7 +45,7 @@ const SignUp = () => {
     formData.append("file", file);
 
     axios
-      .post("http://localhost:8000/api/upload", formData)
+      .post("https://petmedbackend.onrender.com/api/upload", formData)
       .then((response) => {
         setPaitentData((values) => ({
           ...values,
@@ -72,7 +72,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/paitent/registerPaitent", paitentData)
+      .post("https://petmedbackend.onrender.com/api/paitent/registerPaitent", paitentData)
       .then((response) => {
         {
           response.data.status === "SUCCESS"

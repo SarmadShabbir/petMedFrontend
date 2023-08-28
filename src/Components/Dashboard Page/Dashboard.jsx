@@ -17,7 +17,7 @@ const Dashboard = () => {
       const parsedPatientData = JSON.parse(patientData);
       if (parsedPatientData) {
         const response = await axios.get(
-          `http://localhost:8000/api/paitent/fetch/fetchPastAppointments/${parsedPatientData._id}`
+          `https://petmedbackend.onrender.com/api/paitent/fetch/fetchPastAppointments/${parsedPatientData._id}`
         );
         const convertedAppointments = response.data.appointmentInfo.map(
           (appointment) => {

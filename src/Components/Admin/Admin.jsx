@@ -50,7 +50,7 @@ const Admin = () => {
   const fetchDoctors = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/admin/getDoctors"
+        "https://petmedbackend.onrender.com/api/admin/getDoctors"
       );
       setDoctors(response.data.doctors);
     } catch (error) {
@@ -62,7 +62,7 @@ const Admin = () => {
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/admin/fetchAllAppointments"
+        "https://petmedbackend.onrender.com/api/admin/fetchAllAppointments"
       );
       const convertedAppointments = response.data.appointments.map(
         (appointment) => {
@@ -85,7 +85,7 @@ const Admin = () => {
   const fetchLabs = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/admin/getLabs"
+        "https://petmedbackend.onrender.com/api/admin/getLabs"
       );
       setLabs(response.data.data);
     } catch (error) {
@@ -101,7 +101,7 @@ const Admin = () => {
 
       // First API Call
       const response = await axios.post(
-        "http://localhost:8000/api/upload",
+        "https://petmedbackend.onrender.com/api/upload",
         formData
       );
 
@@ -119,7 +119,7 @@ const Admin = () => {
   useEffect(() => {
     if (labPostingData.imgUrl !== null) {
       axios
-        .post("http://localhost:8000/api/admin/addLab", labPostingData)
+        .post("https://petmedbackend.onrender.com/api/admin/addLab", labPostingData)
         .then((labPostresponse) => {
           if (labPostresponse.data.status === "SUCCESS") {
             toast.success(labPostresponse.data.message_en, {
@@ -145,7 +145,7 @@ const Admin = () => {
 
       // First API call: Upload the file
       const response = await axios.post(
-        "http://localhost:8000/api/upload",
+        "https://petmedbackend.onrender.com/api/upload",
         formData
       );
 
@@ -164,7 +164,7 @@ const Admin = () => {
     if (postedBlogData.imgUrl !== null) {
       // Second API call: Add the blog post after imgUrl is updated
       axios
-        .post("http://localhost:8000/api/admin/addBlog", postedBlogData)
+        .post("https://petmedbackend.onrender.com/api/admin/addBlog", postedBlogData)
         .then((blogPostData) => {
           if (blogPostData.data.status === "SUCCESS") {
             toast.success(blogPostData.data.message_en, {
@@ -186,7 +186,7 @@ const Admin = () => {
   const fetchBlogs = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8000/api/admin/getAllBlogs"
+        "https://petmedbackend.onrender.com/api/admin/getAllBlogs"
       );
       const convertedBlogsDate = response.data.blogs.map((blog) => {
         const timestamp = blog.createdAt;

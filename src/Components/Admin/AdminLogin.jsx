@@ -31,7 +31,7 @@ const AdminLogin = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/api/admin/authenticateAdmin", formData)
+      .post("https://petmedbackend.onrender.com/api/admin/authenticateAdmin", formData)
       .then((response) => {
         if (response.data.status === "SUCCESS") {
           toast.success(response.data.message_en, {

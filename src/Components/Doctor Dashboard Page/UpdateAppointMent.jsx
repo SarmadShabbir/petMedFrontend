@@ -40,7 +40,7 @@ const UpdateAppointMent = ({
   const updateStatus = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/doctor/updateStatus`,
+        `https://petmedbackend.onrender.com/api/doctor/updateStatus`,
         updateStatusData
       );
       console.log(response);
