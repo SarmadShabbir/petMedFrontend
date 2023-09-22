@@ -11,7 +11,7 @@ const Lab = () => {
 
   useEffect(() => {
     const fetchLabs = async () => {
-      const labs = await axios.get('https://petmedbackend.onrender.com/api/admin/getLabs');
+      const labs = await axios.get('http://localhost:8000/api/admin/getLabs');
       try {
         setlabsCategory(labs.data.data);
         const timer = setTimeout(() => {

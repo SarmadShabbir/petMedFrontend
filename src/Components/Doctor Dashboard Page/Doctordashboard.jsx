@@ -103,7 +103,7 @@ const Doctordashboard = () => {
     try {
       const requestData = { _id: _id };
       const response = await axios.delete(
-        "https://petmedbackend.onrender.com/api/doctor/deleteSlot",
+        "http://localhost:8000/api/doctor/deleteSlot",
         { data: requestData }
       );
 
@@ -135,7 +135,7 @@ const Doctordashboard = () => {
       const doctorId = parsedDoctorData._id;
       axios
         .get(
-          `https://petmedbackend.onrender.com/api/doctor/fetch/getDoctorSlots/${doctorId}`
+          `http://localhost:8000/api/doctor/fetch/getDoctorSlots/${doctorId}`
         )
         .then((response) => {
           setDoctorAvailableSlots(response.data.slots);
@@ -206,7 +206,7 @@ const Doctordashboard = () => {
     e.preventDefault();
 
     axios
-      .patch("https://petmedbackend.onrender.com/api/doctor/updateDoctor", updatedData)
+      .patch("http://localhost:8000/api/doctor/updateDoctor", updatedData)
       .then((response) => {
         if (response.data.status === "SUCCESS") {
           toast.success(response.data.message_en, {
@@ -230,7 +230,7 @@ const Doctordashboard = () => {
     e.preventDefault();
 
     axios
-      .patch("https://petmedbackend.onrender.com/api/doctor/updatePassword", passwordData)
+      .patch("http://localhost:8000/api/doctor/updatePassword", passwordData)
       .then((response) => {
         if (response.data.status === "SUCCESS") {
           toast.success(response.data.message_en, {
@@ -251,7 +251,7 @@ const Doctordashboard = () => {
   // handle slot submit
   const handleSlotsSubmit = () => {
     axios
-      .post("https://petmedbackend.onrender.com/api/doctor/addSlot", slotsInfo)
+      .post("http://localhost:8000/api/doctor/addSlot", slotsInfo)
       .then((response) => {
         if (response.data.status === "SUCCESS") {
           if (response.data.status === "SUCCESS") {
@@ -312,7 +312,7 @@ const Doctordashboard = () => {
       const parsedDoctorData = JSON.parse(doctorData);
       if (parsedDoctorData) {
         const response = await axios.get(
-          `https://petmedbackend.onrender.com/api/doctor/fetch/allAppointments/${parsedDoctorData._id}`
+          `http://localhost:8000/api/doctor/fetch/allAppointments/${parsedDoctorData._id}`
         );
 
         const convertedAppointments = response.data.appointments.map(

@@ -25,7 +25,7 @@ const BookDoctor = (props) => {
   const fetchSlots = async () => {
     try {
       const response = await axios.get(
-        `https://petmedbackend.onrender.com/api/doctor/fetch/getDoctorSlots/${props.doctorId}`
+        `http://localhost:8000/api/doctor/fetch/getDoctorSlots/${props.doctorId}`
       );
       setDoctorSlots(response.data.slots);
     } catch (error) {
@@ -52,7 +52,7 @@ const BookDoctor = (props) => {
         });
       } else {
         const response = await axios.post(
-          "https://petmedbackend.onrender.com/api/paitent/bookDoctor",
+          "http://localhost:8000/api/paitent/bookDoctor",
           bookingInfo
         );
         if (response.data.status === "SUCCESS") {

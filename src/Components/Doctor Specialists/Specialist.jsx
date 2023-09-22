@@ -27,7 +27,7 @@ const Specialist = () => {
     const fetchSpecialists = async () => {
       try {
         const fetched = await axios.get(
-          `https://petmedbackend.onrender.com/api/doctor/fetchAllDoctorsBySpecialization/${specialization}`
+          `http://localhost:8000/api/doctor/fetchAllDoctorsBySpecialization/${specialization}`
         );
         setSpecialists(fetched.data.doctor);
         const timer = setTimeout(() => {

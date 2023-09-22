@@ -33,7 +33,7 @@ const Doctorlogin = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post('https://petmedbackend.onrender.com/api/doctor/authenticateDoctor', formData)
+      .post('http://localhost:8000/api/doctor/authenticateDoctor', formData)
       .then((response) => {
         if (response.data.status === 'SUCCESS') {
           toast.success(response.data.message_en, {
