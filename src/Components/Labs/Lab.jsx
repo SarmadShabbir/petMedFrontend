@@ -49,7 +49,7 @@ const Lab = () => {
                     <div className='col-4 mb-3' key={data.id}>
                       <div className='card'>
                         <img
-                          src={data.imgUrl}
+                          src={`../../../upload/${data.imgUrl}`}
                           className='card-img-top'
                           height='233px'
                           width='414px'
